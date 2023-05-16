@@ -1,24 +1,8 @@
 from fastapi import FastAPI
-import psycopg2
-from connection.connection import Connection
+from connection.user_db import Connection
 
 app = FastAPI()
 conn = Connection()
-
-#ef conn_database():
-#
-#   try:
-#
-#       conn = psycopg2.connect(host="database", database="test", user="postgres", password="password")
-#       cursor = conn.cursor()
-#       cursor.execute("SELECT * FROM datos;")
-#       result = cursor.fetchone()
-#
-#   except:
-#       
-#       result = "Error de conexion"
-#
-#   return result
 
 @app.get('/')
 def message():
@@ -40,7 +24,7 @@ def message():
 @app.get('/products')
 def message_2():
 
-    return conn_database()
+    return {"message":"Hola"}
 
 @app.get('/products/{product_id}')
 def message_2(product_id: int):
