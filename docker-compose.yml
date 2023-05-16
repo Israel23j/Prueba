@@ -1,0 +1,38 @@
+services:
+  backend:
+    container_name: backend
+    image: backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
+
+  database:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_PASSWORD: password
+    volumes:
+      - "./backend/volumes_postgres:/var/lib/postgresql/data"
+      - "./backend/postgres_database/prueba.sql:/docker-entrypoint-initdb.d/prueba.sql"
+    ports:
+      - '5432:5432'
+    
+  frontend: 
+    container_name: frontend
+    image: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - "./frontend/code:/var/www/html"
+    ports: 
+      - '9090:80'
+    depends_on:
+      - backend
+
+
+
+    
